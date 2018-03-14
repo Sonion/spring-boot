@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://code.alibabatech.com/schema/dubbo
+        http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+    <!-- consumer application name -->
+    <dubbo:application name="${project.name}" />
+    <dubbo:registry address="${dubbo.registry.address}" />
+    <dubbo:protocol name="dubbo" port="${dubbo.protocol.port}" threadpool="MonitoredFixed" threads="500">
+        <dubbo:parameter key="monitorLog" value="true" />
+    </dubbo:protocol>
+
+    <!--<dubbo:provider filter="-exception"/>-->
+    <dubbo:monitor protocol="registry" />
+
+    <dubbo:provider timeout="500" retries="0" filter="default,DubboAccessLogFilter" />
+
+    <!-- which service to consume? -->
+
+    <dubbo:service interface="api.provider.SecurityDepositProvider" ref="securityDepositProviderImpl" version="1.0.0" />
+</beans>

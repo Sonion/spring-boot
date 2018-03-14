@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: org.glassfish.web:el-impl:2.2">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.glassfish.web/el-impl/2.2/a401771e200ff17a77756c2109250619722e4660/el-impl-2.2.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.glassfish.web/el-impl/2.2/5c29c1539aa95d5029e3a8845fdd92a8ebce2dcb/el-impl-2.2-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--设置log4j2的自身log级别为warn-->
+<Configuration status="WARN" strict="true">
+
+    <Properties>
+        <Property name="project.name">${sys:project.name}</Property>
+        <Property name="logging.file.name">${sys:logging.file.path}/${project.name}.log</Property>
+        <Property name="logging.file.warn.name">${sys:logging.file.path}/${project.name}-warn.log</Property>
+        <Property name="logging.file.error.name">${sys:logging.file.path}/${project.name}-error.log</Property>
+        <Property name="logging.file.action.name">${sys:logging.file.path}/../action/${project.name}-action.log</Property>
+        <Property name="logging.file.monitor.name">${sys:logging.file.path}/../monitor/${project.name}-monitor.log</Property>
+        <Property name="layout">%d %p [%X{req_id}] [%t] %c{1.}:%M:%L %m%n</Property>
+    </Properties>
+
+    <appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="${layout}" />
+        </Console>
+
+        <RollingRandomAccessFile name="RollingRandomAccessFile"
+                                 immediateFlush="true" fileName="${logging.file.name}"
+                                 filePattern="${logging.file.name}-%d{yyyy-MM-dd-HH}">
+            <PatternLayout pattern="${layout}" />
+            <ThresholdFilter level="debug" />
+            <TimeBasedTriggeringPolicy />
+        </RollingRandomAccessFile>
+
+        <RollingRandomAccessFile name="RollingRandomAccessFileWarn"
+                                 immediateFlush="true" fileName="${logging.file.warn.name}"
+                                 filePattern="${logging.file.warn.name}-%d{yyyy-MM-dd}">
+            <PatternLayout pattern="${layout}" />
+            <ThresholdFilter level="warn" />
+            <TimeBasedTriggeringPolicy />
+        </RollingRandomAccessFile>
+
+        <RollingRandomAccessFile name="RollingRandomAccessFileError"
+                                 immediateFlush="true" fileName="${logging.file.error.name}"
+                                 filePattern="${logging.file.error.name}-%d{yyyy-MM-dd}">
+            <PatternLayout pattern="${layout}" />
+            <ThresholdFilter level="error" />
+            <TimeBasedTriggeringPolicy />
+        </RollingRandomAccessFile>
+
+        <RollingRandomAccessFile name="actionLogFile"
+                                 immediateFlush="true" fileName="${logging.file.action.name}"
+                                 filePattern="${logging.file.action.name}.%d{yyyy-MM-dd}">
+            <PatternLayout pattern="%m%n" />
+            <ThresholdFilter level="debug" />
+            <TimeBasedTriggeringPolicy />
+        </RollingRandomAccessFile>
+
+        <RollingRandomAccessFile name="monitorLogFile"
+                                 immediateFlush="true" fileName="${logging.file.monitor.name}"
+                                 filePattern="${logging.file.monitor.name}.%d{yyyy-MM-dd}">
+            <PatternLayout pattern="%m%n" />
+            <ThresholdFilter level="info" />
+            <TimeBasedTriggeringPolicy />
+        </RollingRandomAccessFile>
+    </appenders>
+
+    <loggers>
+        <AsyncRoot level="info" includeLocation="true">
+            <appender-ref ref="Console"/>
+            <appender-ref ref="RollingRandomAccessFile"/>
+            <appender-ref ref="RollingRandomAccessFileWarn" />
+            <appender-ref ref="RollingRandomAccessFileError"/>
+        </AsyncRoot>
+
+
+        <logger name="com.dianwoba.platform.mapper" level="debug" />
+    </loggers>
+
+</Configuration>
